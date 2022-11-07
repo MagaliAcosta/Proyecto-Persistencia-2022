@@ -14,9 +14,8 @@ router.get("/", (req, res) => {
 });
 
 router.post("/registrarse", (req, res) => {
-    const passwordEncriptada = bcrypt.hashSync(req.body.password, 10)
     models.alumno
-    .create({nombre: req.body.nombre, apellido: req.body.apellido, email: req.body.email, dni:req.body.dni, id_carrera: req.body.id_carrera, password: passwordEncriptada})
+    .create({nombre: req.body.nombre, apellido: req.body.apellido, email: req.body.email, dni:req.body.dni, id_carrera: req.body.id_carrera, password: req.body.password})
     .then(alumno => res.status(201).send(`El usuario ${alumno.nombre} se ha creado con éxito.`))
     .catch(error => {
       if (error == "SequelizeUniqueConstraintError: Validation error") {
