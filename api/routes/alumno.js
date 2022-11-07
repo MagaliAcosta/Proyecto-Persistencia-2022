@@ -4,7 +4,7 @@ var models = require("../models");
 const jwt = require("jsonwebtoken");
 
 router.get("/", (req, res) => {
-  console.log("Esto es un mensaje para ver en consola");
+  console.log("Esto es un mensaje para ver en consola jaja");
   models.alumno
     .findAll({
       attributes: ["nombre", "apellido"]
