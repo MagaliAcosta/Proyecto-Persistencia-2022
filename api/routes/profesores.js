@@ -5,22 +5,21 @@ const jwt = require("jsonwebtoken");
 
 router.get("/", (req, res) => {
   console.log("Esto es un mensaje para ver en consola");
-  models.alumno
+  models.profesores
     .findAll({
       attributes: ["nombre", "apellido"],
-      include:[{as:'Carrera-Relacionada', model:models.carrera, attributes: ["id","nombre"]}]
-
+      include:[{as:'materia-Relacionada', model:models.materia, attributes: ["id","nombre"]}]
 
     })
-    .then(alumnos => res.send(alumnos))
+    .then(profesores => res.send(profesores))
     .catch(() => res.sendStatus(500));
 });
 
 router.post("/registrarse", (req, res) => {
     const passwordEncriptada = bcrypt.hashSync(req.body.password, 10)
-    models.alumno
+    models.profesores
     .create({nombre: req.body.nombre, apellido: req.body.apellido, email: req.body.email, dni:req.body.dni, id_carrera: req.body.id_carrera, password: passwordEncriptada})
-    .then(alumno => res.status(201).send(`El usuario ${alumno.nombre} se ha creado con éxito.`))
+    .then(profesores => res.status(201).send(`El usuario ${profesores.nombre} se ha creado con éxito.`))
     .catch(error => {
       if (error == "SequelizeUniqueConstraintError: Validation error") {
         res.status(400).send('Bad request: el mail o dni ya se encuentran asociado a otra cuenta.')
@@ -36,7 +35,7 @@ router.post("/registrarse", (req, res) => {
 
 router.post("/login", (req, res) => {
     // Se busca que exista un usuario registrado con el mail
-    models.alumno.findOne({
+    models.profesores.findOne({
       where: {email: req.body.email}
     })
     .then(user => {
@@ -58,39 +57,39 @@ router.post("/login", (req, res) => {
   })
   
 
-const findCarrera = (id, { onSuccess, onNotFound, onError }) => {
-  models.carrera
+const findMateria = (id, { onSuccess, onNotFound, onError }) => {
+  models.materia
     .findOne({
       attributes: ["id", "nombre"],
       where: { id }
     })
-    .then(carrera => (carrera ? onSuccess(carrera) : onNotFound()))
+    .then(materia => (materia ? onSuccess(materia) : onNotFound()))
     .catch(() => onError());
 };
 
 router.get("/:id", (req, res) => {
-  findCarrera(req.params.id, {
-    onSuccess: carrera => res.send(carrera),
+  findMateria(req.params.id, {
+    onSuccess: materia => res.send(materia),
     onNotFound: () => res.sendStatus(404),
     onError: () => res.sendStatus(500)
   });
 });
 
 router.put("/:id", (req, res) => {
-  const onSuccess = carrera =>
-    carrera
+  const onSuccess = materia =>
+    materia
       .update({ nombre: req.body.nombre }, { fields: ["nombre"] })
       .then(() => res.sendStatus(200))
       .catch(error => {
         if (error == "SequelizeUniqueConstraintError: Validation error") {
-          res.status(400).send('Bad request: existe otra carrera con el mismo nombre')
+          res.status(400).send('Bad request: existe otra materia con el mismo nombre')
         }
         else {
           console.log(`Error al intentar actualizar la base de datos: ${error}`)
           res.sendStatus(500)
         }
       });
-    findCarrera(req.params.id, {
+    findMateria(req.params.id, {
     onSuccess,
     onNotFound: () => res.sendStatus(404),
     onError: () => res.sendStatus(500)
@@ -98,12 +97,12 @@ router.put("/:id", (req, res) => {
 });
 
 router.delete("/:id", (req, res) => {
-  const onSuccess = carrera =>
-    carrera
+  const onSuccess = materia =>
+    materia
       .destroy()
       .then(() => res.sendStatus(200))
       .catch(() => res.sendStatus(500));
-  findCarrera(req.params.id, {
+  findMateria(req.params.id, {
     onSuccess,
     onNotFound: () => res.sendStatus(404),
     onError: () => res.sendStatus(500)
