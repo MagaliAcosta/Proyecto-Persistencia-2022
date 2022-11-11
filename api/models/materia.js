@@ -4,5 +4,6 @@ module.exports = (sequelize, DataTypes) => {
     nombre: DataTypes.STRING,
     id_carrera: DataTypes.INTEGER
   }, {});
+  
   return materia;
 };
