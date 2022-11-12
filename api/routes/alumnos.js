@@ -14,8 +14,13 @@ const findAlumnoDni = (dniBuscado, { onSuccess, onNotFound, onError }) => {
 
 
 router.get("/", (req, res,next) => {
+  const paginaActualNumero = Number.parseInt(req.query.paginaActual);
+  const cantidadNumero = Number.parseInt(req.query.cantidad);
 
-  models.alumnos.findAll({attributes: ["id","nombre","apellido","email","dni","password"],
+  models.alumnos.findAll({
+    offset: (paginaActualNumero * cantidadNumero), 
+    limit: cantidadNumero,
+    attributes: ["id","nombre","apellido","email","dni","password"],
        
     include:[
         {as:'Carrera-Relacionada', 

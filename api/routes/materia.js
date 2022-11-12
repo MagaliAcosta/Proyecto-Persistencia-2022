@@ -4,8 +4,13 @@ var models = require("../models");
 
 router.get("/", (req, res) => {
     console.log("Esto es un mensaje para ver en consola");
+    const paginaActualNumero = Number.parseInt(req.query.paginaActual);
+    const cantidadNumero = Number.parseInt(req.query.cantidad);
+    
     models.materia
         .findAll({
+            offset: (paginaActualNumero * cantidadNumero), 
+            limit: cantidadNumero,
             attributes: ["id", "nombre"]
         })
         .then(materia => res.send(materia))

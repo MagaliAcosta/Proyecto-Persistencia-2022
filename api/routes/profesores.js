@@ -13,8 +13,13 @@ const findProfesorDni = (dniBuscado, { onSuccess, onNotFound, onError }) => {
 };
 
 router.get("/", (req, res,next) => {
+  const paginaActualNumero = Number.parseInt(req.query.paginaActual);
+  const cantidadNumero = Number.parseInt(req.query.cantidad);
 
-  models.profesores.findAll({attributes: ["id","nombre","apellido", "dni"],
+  models.profesores.findAll({
+    offset: (paginaActualNumero * cantidadNumero), 
+    limit: cantidadNumero,
+    attributes: ["id","nombre","apellido", "dni"],
        
     include:[
         {as:'Materia-Relacionada', 
