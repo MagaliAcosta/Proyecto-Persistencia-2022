@@ -3,14 +3,14 @@ var router = express.Router();
 var models = require("../models");
 
 router.get("/", (req, res) => {
-  const paginaActualNumero = Number.parseInt(req.query.paginaActual);
-  const cantidadNumero = Number.parseInt(req.query.cantidad);
   
   models.departamentos
       .findAll({
-          offset: (paginaActualNumero * cantidadNumero), 
-          limit: cantidadNumero,
-          attributes: ["id", "nombre"]
+          attributes: ["id", "nombre"],
+          include: [
+            {
+              as: 'Carreras-Relacionadas', model:models.carrera, attributes: ["id", "nombre"]
+          }]
       })
       .then(departamento => res.send(departamento))
       .catch(() => res.sendStatus(500));

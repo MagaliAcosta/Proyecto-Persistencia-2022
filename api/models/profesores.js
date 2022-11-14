@@ -6,6 +6,7 @@ module.exports = (sequelize, DataTypes) => {
     dni: DataTypes.INTEGER,
     id_materia: DataTypes.INTEGER
   }, {});
+  
   profesores.associate = function(models) {
     profesores.belongsTo(models.materia// modelo al que pertenece
     ,{
