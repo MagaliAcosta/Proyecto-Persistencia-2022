@@ -8,7 +8,7 @@ var materiaRouter = require('./routes/materia');
 var profesoresRouter = require('./routes/profesores');
 var alumnosRouter = require('./routes/alumnos');
 var departamentoRouter = require('./routes/departamento');
-var verificarToken = require("/.verificarToken")
+var verificarToken = require("./verificarToken")
 
 
 
