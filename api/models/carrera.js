@@ -4,13 +4,6 @@ module.exports = (sequelize, DataTypes) => {
     nombre: DataTypes.STRING,
     id_departamento: DataTypes.STRING
   }, {});
-  carrera.associate = function(models) {
-    // associations can be defined here
-    carrera.belongsTo(models.departamento, {
-      as : 'Departamento-Relacionado',
-      foreignKey: 'id_departamento',
-    })
-  };
   
   return carrera;
 };

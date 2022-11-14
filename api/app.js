@@ -7,7 +7,7 @@ var carrerasRouter = require('./routes/carreras');
 var materiaRouter = require('./routes/materia');
 var profesoresRouter = require('./routes/profesores');
 var alumnosRouter = require('./routes/alumnos');
-var departamentoRouter = require('./routes/departamento');
+var departamentoRouter = require('./routes/departamentos');
 var verificarToken = require("./verificarToken")
 
 
@@ -29,7 +29,7 @@ app.use('/car', verificarToken.verificador, carrerasRouter);
 app.use('/mat', verificarToken.verificador, materiaRouter);
 app.use('/prof', verificarToken.verificador, profesoresRouter);
 app.use('/alum', alumnosRouter);
-app.use('/depa', verificarToken.verificador, departamentoRouter);
+app.use('/depa', departamentoRouter);
 
 
 
