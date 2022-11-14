@@ -7,9 +7,8 @@ module.exports = (sequelize, DataTypes) => {
   carrera.associate = function(models) {
     // associations can be defined here
     carrera.belongsTo(models.departamento, {
-      as : 'Departamento-Relacionada',
+      as : 'Departamento-Relacionado',
       foreignKey: 'id_departamento',
-      // sourceKey: 'id'
     })
   };
   

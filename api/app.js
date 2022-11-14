@@ -8,6 +8,7 @@ var materiaRouter = require('./routes/materia');
 var profesoresRouter = require('./routes/profesores');
 var alumnosRouter = require('./routes/alumnos');
 var departamentoRouter = require('./routes/departamento');
+var verificarToken = require("/.verificarToken")
 
 
 
@@ -24,11 +25,11 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-app.use('/car', carrerasRouter);
-app.use('/mat', materiaRouter);
-app.use('/prof', profesoresRouter);
+app.use('/car', verificarToken.verificador, carrerasRouter);
+app.use('/mat', verificarToken.verificador, materiaRouter);
+app.use('/prof', verificarToken.verificador, profesoresRouter);
 app.use('/alum', alumnosRouter);
-app.use('/depa', departamentoRouter);
+app.use('/depa', verificarToken.verificador, departamentoRouter);
 
 
 

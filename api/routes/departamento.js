@@ -1,7 +1,6 @@
 var express = require("express");
 var router = express.Router();
 var models = require("../models");
-const departamento = require("../models/departamento");
 
 router.get("/", (req, res) => {
     const paginaActualNumero = Number.parseInt(req.query.paginaActual);
