@@ -5,7 +5,7 @@ var bcrypt = require("bcrypt")
 var jwt = require("jsonwebtoken")
 
 const findAlumnoDni = (dniBuscado, { onSuccess, onNotFound, onError }) => {
-  models.profesores
+  models.alumnos
       .findOne({
         attributes: ["id", "nombre","apellido", "dni"],
         where: {dni: dniBuscado }

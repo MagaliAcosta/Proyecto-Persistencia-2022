@@ -25,11 +25,11 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-app.use('/car', carrerasRouter);
+app.use('/car', verificarToken.verificador, carrerasRouter);
 app.use('/mat', verificarToken.verificador, materiaRouter);
 app.use('/prof', verificarToken.verificador, profesoresRouter);
 app.use('/alum', alumnosRouter);
-app.use('/depa', departamentoRouter);
+app.use('/depa', verificarToken.verificador, departamentoRouter);
 
 
 
