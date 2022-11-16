@@ -6,6 +6,11 @@ const findProfesorDni = (dniBuscado, { onSuccess, onNotFound, onError }) => {
   models.profesores
       .findOne({
         attributes: ["id", "nombre","apellido", "dni"],
+        include:[
+          {as:'Materia-Relacionada', 
+          model:models.materia, 
+          attributes: ["id","nombre"]}
+      ],
         where: {dni: dniBuscado }
       })
       .then(profesor => (profesor ? onSuccess(profesor) : onNotFound()))

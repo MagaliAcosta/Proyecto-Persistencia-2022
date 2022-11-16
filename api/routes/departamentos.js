@@ -31,11 +31,15 @@ router.post("/", (req, res) => {
     });
 });
 
-const findDepartamento = (nombre, { onSuccess, onNotFound, onError }) => {
-  models.carrera
+const findDepartamento = (nombreABuscar, { onSuccess, onNotFound, onError }) => {
+  models.departamentos
     .findOne({
       attributes: ["id", "nombre"],
-      where: { nombre: nombre }
+      include: [
+        {
+          as: 'Carreras-Relacionadas', model:models.carrera, attributes: ["id", "nombre"]
+      }],
+      where: { nombre: nombreABuscar }
     })
     .then(departamento => (departamento ? onSuccess(carrera) : onNotFound()))
     .catch(() => onError());
@@ -70,7 +74,7 @@ router.put("/:nombre", (req, res) => {
   });
 });
 
-router.delete("/:id", (req, res) => {
+router.delete("/:nombre", (req, res) => {
   const onSuccess = departamento =>
   departamento
       .destroy()
